@@ -1,163 +1,232 @@
 # Autonomous AI Testing & QA Agent
 
-An AI-powered website testing and quality assurance platform that explores websites, generates test scenarios, executes browser-based tests, investigates failures, and generates QA reports.
+An intelligent web application testing platform that explores websites, generates test scenarios, executes automated browser tests, investigates failures, and generates QA reports.
 
-## 1. Project Overview
+<p align="center">
+  <img src="docs/assets/dashboard.png" alt="Autonomous QA Dashboard" width="100%">
+</p>
 
-The Autonomous AI Testing & QA Agent automates important software testing activities using browser automation, AI-assisted analysis, and workflow orchestration.
+## Overview
 
-The platform helps users:
-- Register and manage website projects.
-- Explore website pages and identify features.
-- Generate test scenarios.
-- Execute browser tests using Playwright.
-- Investigate failed test results.
-- Capture testing evidence.
-- Generate and manage QA reports.
+The Autonomous AI Testing & QA Agent is designed to simplify website quality assurance through automated browser testing and an agent-based workflow.
 
-## 2. Technology Stack
+Users can register websites, explore website content, generate test cases, execute test scenarios, track bugs, and generate detailed QA reports through a centralized dashboard.
 
-### Frontend
-- React
-- Vite
-- JavaScript
-- Axios
-- Recharts
-- Lucide React
+## Key Features
 
-### Backend
-- Python
-- FastAPI
-- SQLAlchemy
-- PostgreSQL
-- Psycopg
-- Playwright
+- **Website Exploration:** Automatically explores website pages and discovers headings, sections, buttons, and interactive elements.
+- **Test Case Generation:** Generates website testing scenarios using the local test planner and AI planning integration.
+- **Automated Test Execution:** Executes browser-based tests using Playwright.
+- **Bug Investigation:** Analyzes failed test results and creates structured bug reports.
+- **AI Integration:** Includes an optional OpenAI-powered investigation path with rule-based fallback.
+- **QA Reporting:** Generates reports containing test execution statistics and bug summaries.
+- **Test History:** Stores projects, test cases, execution results, and reports in PostgreSQL.
+- **Docker Deployment:** Runs the frontend and backend using Docker Compose.
 
-### AI and Orchestration
-- LangGraph
-- LangChain Core
-- OpenAI API integration with rule-based fallback
+## Application Screenshots
 
-### Deployment
-- Docker
-- Docker Compose
-- Nginx
-- WSL 2
+### 1. Dashboard
 
-## 3. System Architecture
+Overview of projects, test cases, test runs, bugs, and testing statistics.
 
-The application follows a frontend-backend architecture.
+![Dashboard](docs/assets/dashboard.png)
 
-1. React frontend provides the user interface.
-2. FastAPI handles API requests and application workflows.
-3. LangGraph coordinates the testing workflow.
-4. Playwright performs browser automation.
-5. PostgreSQL stores projects, test cases, execution results, and bug reports.
-6. The reporting module generates QA reports.
+### 2. Test Execution
 
-## 4. Main Modules
+Manage test scenarios and execute automated website tests.
 
-- Website Project Management
-- Website Explorer Agent
-- Test Planner
-- Test Executor
-- Bug Investigator
-- QA Report Generator
-- Autonomous Workflow Orchestration
+![Test Execution](docs/assets/test-execution.png)
 
-## 5. Docker Deployment
+### 3. Bug Reports
 
-### Prerequisites
-- Docker Desktop
-- Docker Compose
-- Existing PostgreSQL database
-- Windows with WSL 2 support
+Review detected issues, severity levels, and investigation status.
 
-### Start the application
+![Bug Reports](docs/assets/bug-report.png)
 
-From the project root:
+### 4. QA Reports
 
-```powershell
-docker compose up -d
+View generated QA reports, execution summaries, and pass percentages.
+
+![QA Reports](docs/assets/qa-reports.png)
+
+## Technology Stack
+
+| Component | Technologies |
+|---|---|
+| Frontend | React, JavaScript, CSS |
+| Backend | Python, FastAPI |
+| Browser Automation | Playwright |
+| Agent Orchestration | LangGraph |
+| AI Integration | OpenAI API |
+| Database | PostgreSQL |
+| ORM | SQLAlchemy |
+| Containerization | Docker, Docker Compose |
+| API Documentation | Swagger / OpenAPI |
+
+## System Architecture
+
+```mermaid
+flowchart TD
+    A[React Frontend] --> B[FastAPI Backend]
+    B --> C[LangGraph Orchestrator]
+    C --> D[Website Explorer]
+    C --> E[Test Planner]
+    C --> F[Playwright Test Executor]
+    C --> G[Bug Investigator]
+    C --> H[QA Report Generator]
+    D --> I[(PostgreSQL)]
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    G -. Optional AI .-> J[OpenAI API]
+    E -. AI Planning Integration .-> J
 ```
 
-### Check containers
+## Project Structure
 
-```powershell
+```text
+autonomous-qa-agent/
+│
+├── backend/
+│   ├── app/
+│   │   ├── agents/
+│   │   ├── models/
+│   │   ├── routers/
+│   │   ├── schemas/
+│   │   └── services/
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   └── pages/
+│   └── Dockerfile
+│
+├── docs/
+│   └── assets/
+│       ├── dashboard.png
+│       ├── test-execution.png
+│       ├── bug-report.png
+│       └── qa-reports.png
+│
+├── docker-compose.yml
+├── .gitignore
+└── README.md
+```
+
+## Installation and Setup
+
+### Prerequisites
+
+- Python 3.11+
+- Node.js 24+
+- PostgreSQL with the project database configured
+- Docker Desktop with Docker Compose
+- Git
+
+### Option 1: Run using Docker
+
+Clone the repository:
+
+```bash
+git clone https://github.com/Harikrishna-9133/autonomous-qa-agent.git
+cd autonomous-qa-agent
+```
+
+Configure your backend environment variables in `backend/.env`.
+
+Do not upload your `.env` file or API keys to GitHub.
+
+Start the application:
+
+```bash
+docker compose up -d --build
+```
+
+Check running containers:
+
+```bash
 docker compose ps
 ```
 
-### View backend logs
+### Option 2: Run locally
+
+**Backend**
 
 ```powershell
-docker compose logs --tail=50 backend
+cd backend
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+python -m uvicorn app.main:app --reload
 ```
 
-### Restart containers
+**Frontend** (open another terminal):
 
 ```powershell
-docker compose restart
+cd frontend
+npm install
+npm run dev
 ```
 
-### Stop containers
-
-```powershell
-docker compose down
-```
-
-Do not use `docker compose down -v` when preserving database or volume data is important.
-
-## 6. Application URLs
+## Application URLs
 
 | Service | URL |
 |---|---|
 | Frontend | http://localhost:5173 |
-| Backend | http://localhost:8000 |
-| API Documentation | http://localhost:8000/docs |
-| Backend Health | http://localhost:8000/health |
-| Database Health | http://localhost:8000/db-health |
+| Backend API | http://localhost:8000 |
+| Swagger Documentation | http://localhost:8000/docs |
+| Health Check | http://localhost:8000/health |
 
-## 7. Demonstrated Testing Results
+## Testing Results
 
-A Docker-based QA execution was completed against the portfolio website.
+A verified Docker-based regression run (Run #38) produced the following results:
 
-- Run ID: 38
-- Total tests: 8
-- Passed: 8
-- Failed: 0
-- Skipped: 0
-- Pass rate: 100%
+| Metric | Result |
+|---|---:|
+| Total Tests | 8 |
+| Passed | 8 |
+| Failed | 0 |
+| Skipped | 0 |
+| Pass Rate | 100% |
 
-The QA report was generated and displayed successfully.
+These results represent the recorded regression run, not a guarantee that every website or test scenario will pass.
 
-The Bug Reports interface also displayed existing database records after the Docker restart test.
-
-## 8. Security Considerations
+## Security Considerations
 
 - Keep API keys and database credentials in environment variables.
-- Never commit `.env` files.
-- Restrict website testing to authorized targets.
-- Validate URLs and browser requests.
-- Apply browser isolation, network restrictions, and resource limits before production use.
-- Protect screenshots and test evidence from unauthorized access.
+- Do not commit `.env` files or database backups.
+- Test only websites that you own or have permission to assess.
+- Browser requests are validated to restrict access to local and private network addresses.
+- Additional network isolation and production security hardening are required before exposing the platform publicly.
 
-## 9. Current Limitations
+## Current Limitations
 
-- Some test planning and bug investigation paths use rule-based fallbacks.
-- Test execution still uses keyword-driven interpretation in some workflows.
-- Full autonomous natural-language test execution needs further development.
-- Additional network isolation, authentication, and production deployment hardening are required.
+- Test planning and bug investigation include rule-based fallback implementations.
+- Some test execution behavior is based on predefined checks and keyword-driven interpretation.
+- OpenAI-powered investigation requires a valid API key and available API credits.
+- The current Docker deployment is a development deployment, not a fully production-hardened service.
 
-## 10. Future Enhancements
+## Future Enhancements
 
-- More advanced AI-driven test planning.
-- Natural-language test execution.
-- Improved root-cause analysis.
-- Retrieval-Augmented Generation for historical testing knowledge.
-- Enhanced browser isolation.
-- CI/CD integration.
-- Advanced test analytics and reporting.
+- More autonomous natural-language test planning and execution.
+- Retrieval-Augmented Generation (RAG) for historical bug knowledge.
+- Advanced test coverage and analytics.
+- Enhanced authentication and role-based access control.
+- Isolated browser execution and stronger network security.
+- CI/CD pipeline integration.
 
-## 11. Project Goal
+## Author
 
-The goal is to build an intelligent and extensible QA platform that reduces repetitive manual testing work and helps teams identify, investigate, and report website defects efficiently.
+**Hari Krishna Digiventi**
+
+GitHub: [Harikrishna-9133](https://github.com/Harikrishna-9133)
+
+Project Repository: [Autonomous AI Testing & QA Agent](https://github.com/Harikrishna-9133/autonomous-qa-agent)
+
+---
+
+*Built to make website testing more automated, intelligent, and accessible.*
