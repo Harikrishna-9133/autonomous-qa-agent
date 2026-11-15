@@ -1,0 +1,62 @@
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+venv/
+.venv/
+ENV/
+
+# Node.js
+node_modules/
+dist/
+
+# Database backups
+*.dump
+*.sql
+*.bak
+
+# Logs
+*.log
+
+# Editor files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Git backups and temporary files
+*.backup
+*.tmp
+
+# Generated test artifacts
+test-results/
+playwright-report/
+
+
+# Development backup files
+**/*backup*.py
+**/*_backup_*.py
+**/requirements_backup*.txt
+
+# Generated QA evidence screenshots
+/screenshots/
+
+# Temporary diagnostic scripts
+/backend/diagnose_historical_bugs.py
+/backend/inspect_contact.py
+/backend/update_historical_bugs.py
+
+# Old versions of source files
+/backend/app/routers/test_run_before_individual_fix.py
+/frontend/src/pages/QAReports_backup_project_fix.jsx
